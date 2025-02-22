@@ -1,0 +1,30 @@
+{
+  "name": "Tiny Tapeout 6",
+  "scale": 526,
+  "layers": [
+    {
+      "name": "Microscope",
+      "URL": "tt06-microscope",
+      "width": 6825,
+      "height": 9848,
+      "tileSize": 512,
+      "imageSize": 16384
+    },
+    {
+      "name": "GDS",
+      "URL": "tt06-gds",
+      "width": 6817,
+      "height": 9857,
+      "tileSize": 512,
+      "imageSize": 16384
+    },
+    {
+      "name": "Local interconnect (LI)",
+      "URL": "tt06-li",
+      "width": 6817,
+      "height": 9857,
+      "tileSize": 512,
+      "imageSize": 16384
+    }
+  ]
+}
