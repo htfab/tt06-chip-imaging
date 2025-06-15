@@ -50,5 +50,6 @@
       "tileSize": 512,
       "imageSize": 32768
     }
-  ]
+  ],
+  "links": "data/tt06-links.json"
 }

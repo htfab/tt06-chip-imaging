@@ -22,6 +22,7 @@ function GroupXIV(options) {
   var viewport   = options.viewport,
       scale      = options.scale,
       layers     = options.layers,
+      overlays   = options.overlays,
       tileBuffer = options.tileBuffer;
 
   var maxImageSize = 0, maxWidth = 0, maxHeight = 0, minZoom = 1, maxZoom = 1;
@@ -68,7 +69,7 @@ function GroupXIV(options) {
   map.fitBounds(bounds);
   map.setMaxBounds(bounds.pad(0.5));
 
-  var hasBaseLayer = false, baseLayers = {}, overlays = {};
+  var hasBaseLayer = false, baseLayers = {};
   layers.forEach(function(layer) {
     var layerMaxZoom = layer.maxZoom;
     if(layerMaxZoom === undefined)

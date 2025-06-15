@@ -21,6 +21,7 @@ function initViewer(options, url) {
     scale: options.scale,
     tileSize: options.tileSize,
     layers: options.layers,
+    overlays: options.overlays,
     tilesAlignedTopLeft: options.tilesAlignedTopLeft,
   });
 
@@ -56,6 +57,30 @@ function initViewer(options, url) {
   }
 }
 
+function initLinks(linksUrl, callback) {
+  if (linksUrl == null) {
+    callback(null);
+  } else {
+    var req = new XMLHttpRequest();
+    req.onload = function() {
+      var linkList = JSON.parse(req.responseText);
+      var lg = L.layerGroup();
+      linkList.forEach(function(link) {
+          var p = L.polygon(link.poly);
+          p.on('click', () => window.open(link.url));
+          lg.addLayer(p);
+      });
+      callback(lg);
+    }
+    req.onerror = function() {
+      console.log("Couldn't load links from " + linksUrl);
+      callback(null);
+    }
+    req.open("get", linksUrl, true);
+    req.send();
+  }
+}
+
 function loadViewer(url, options) {
   var viewerOptions = (options === undefined) ? {} : options;
   var canChangeURL = (url === undefined);
@@ -72,7 +97,10 @@ function loadViewer(url, options) {
       layer.URL = url + "/../" + layer.URL;
       layer.URL = layer.URL.replace(/[^\/]+\/..(\/|$)/, '');
     });
-    initViewer(Object.assign({}, viewerOptions, responseOptions), url);
+    initLinks(responseOptions.links, (lg) => {
+        overlayOptions = {"overlays": (lg === null) ? {} : {"Project links": lg}};
+        initViewer(Object.assign({}, viewerOptions, responseOptions, overlayOptions), url);
+    });
   };
   req.onerror = function() {
     var error = document.createElement("div");
